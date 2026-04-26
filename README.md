@@ -28,3 +28,4 @@ SistemaRosetas{
 Cliente "1" -- "*" Producto : tiene productos
 Movimiento "1" -- "*" Producto : tiene uno o varios
 SistemaRosetas "1" -- "*" Cliente : gestiona la ejecucion
+```
