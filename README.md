@@ -32,7 +32,7 @@ class SistemaRosetas {
     +main() void
 }
 
-Cliente "1" --> "1" Producto : posee
+Cliente "1" --> "1" Producto : compra
 Producto "1" --> "*" Movimiento : genera
 SistemaRosetas --> Cliente : ejecuta
 ```
