@@ -2,7 +2,7 @@
 
 ROSETAS CAKESHOP
 
-```mermaind
+```mermaid
 
  class Producto{
 + int id_Producto
