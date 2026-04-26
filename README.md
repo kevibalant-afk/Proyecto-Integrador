@@ -4,31 +4,35 @@ ROSETAS CAKESHOP
 
 ```mermaid
 
- class Producto {
-  +int idProducto
-  +String nombre
-  +String tipo
-}
+classDiagram
 
 class Cliente {
-  +int idCliente
-  +String nombre
+    -int id_Cliente
+    -String nombre
+    +getNombre() String
+    +setNombre(String nombre) void
+}
+
+class Producto {
+    -int id_Producto
+    -String nombre
+    -String tipo
+    +getTipo() String
 }
 
 class Movimiento {
-  +int idMovimiento
-  +double saldoAnterior
-  +double movimiento
-  +double saldoFinal
-  +calcularSaldo() : double
+    -int id_Movimiento
+    -double saldoAnterior
+    -double movimiento
+    -double saldoFinal
+    +calcularSaldo() double
 }
 
 class SistemaRosetas {
-  +main() : void
+    +main() void
 }
 
-' Relaciones
-Cliente "1" -- "*" Producto : tiene
-Producto "1" -- "*" Movimiento : registra
-SistemaRosetas "1" -- "*" Cliente : gestiona
+Cliente "1" --> "1" Producto : posee
+Producto "1" --> "*" Movimiento : genera
+SistemaRosetas --> Cliente : ejecuta
 ```
