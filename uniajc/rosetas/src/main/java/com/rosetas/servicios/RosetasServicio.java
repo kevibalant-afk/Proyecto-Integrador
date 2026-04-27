@@ -6,7 +6,7 @@ public class RosetasServicio {
 
     public void mostrarCliente(Cliente cliente) {
         System.out.println("Cliente: " + cliente.getNombre());
-        System.out.println("Producto: " + cliente.getProducto().getTipo());
+        System.out.println("Producto: " + cliente.getProducto().getNombre());
     }
 
     public void procesarMovimiento(Movimiento movimiento) {
