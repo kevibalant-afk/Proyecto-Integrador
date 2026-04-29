@@ -26,7 +26,7 @@ public class Main {
             final List<Producto> productos = new ArrayList<>();
             productos.add(new Producto(1, "Torta de Chocolate", "libra baja", 120000));
             productos.add(new Producto(2, "Torta de Vainilla", "libra alta", 110000));
-            productos.add(new Producto(3, "Torta de Fresa", "libra baja", 115000));
+            productos.add(new Producto(3, "Torta de Fresa", "media baja", 115000));
 
             System.out.println("Productos disponibles:");
             for (final Producto producto : productos) {

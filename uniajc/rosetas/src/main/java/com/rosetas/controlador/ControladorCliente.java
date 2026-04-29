@@ -2,7 +2,6 @@ package com.rosetas.controlador;
 
 import com.rosetas.modelo.Cliente;
 import com.rosetas.vista.VistaCliente;
-import com.rosetas.modelo.Producto;
 
 public class ControladorCliente {
     
