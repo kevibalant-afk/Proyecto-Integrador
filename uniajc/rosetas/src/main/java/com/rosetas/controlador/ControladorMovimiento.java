@@ -12,12 +12,18 @@ public class ControladorMovimiento {
     public ControladorMovimiento(VistaMovimientos vista) {
         this.vista = vista;
     }
-    public void crearMovimiento(int id_movimiento, double saldoAnterior, double movimiento, Producto producto) {
-        this.movimiento = new Movimiento(id_movimiento, saldoAnterior, movimiento, producto);
-        vista.mostrarMovimiento(this.movimiento);
 
-}
-    public Movimiento getMovimiento() {
-        return movimiento;
+    public void crearMovimiento(int idMovimiento, double saldoAnterior, double monto, Producto producto) {
+
+    double saldoFinal = saldoAnterior + monto;
+
+    if (saldoFinal < 0) {
+        System.out.println("No hay saldo suficiente.");
+        return;
     }
-   }
+
+    this.movimiento = new Movimiento(idMovimiento, saldoAnterior, monto, saldoFinal, producto);
+
+    vista.mostrarMovimiento(this.movimiento); 
+}
+}

@@ -3,7 +3,6 @@ package com.rosetas.vista;
 import com.rosetas.modelo.Cliente;
 import java.util.List;
 import java.util.ArrayList;
-import com.rosetas.modelo.Producto;
 
 
 public class VistaCliente {
@@ -23,20 +22,17 @@ public class VistaCliente {
             System.out.println("- " + cliente.getNombre());
         }
     }
-    public void registrarCliente(String nombre, String apellido, String telefono, Producto producto) {
-        Cliente cliente = new Cliente(0, nombre, apellido, telefono, producto);
+    public void registrarCliente1(String nombre, String apellido, String telefono, int id_Producto) {
+        Cliente cliente = new Cliente(0, nombre, apellido, telefono, id_Producto);
         this.clientes.add(cliente);
         // Aquí podrías agregar el cliente a una lista o base de datos
         System.out.println("Cliente registrado: " + cliente.getNombre());
     }
     public void mostrarCliente(Cliente cliente) {
-        System.out.println("Cliente: " + cliente.getNombre());
-        System.out.println("Telefono: " + cliente.getTelefono());
+        System.out.println("Nombre: " + cliente.getNombre());
         System.out.println("Apellido: " + cliente.getApellido());
-        System.out.println("Producto: " + cliente.getProducto());
-}
-   
-    public List<Cliente> getClientes() {
-        return clientes;
+        System.out.println("Teléfono: " + cliente.getTelefono());
+        System.out.println("ID del producto: " + cliente.getProducto());
     }
+   
 }

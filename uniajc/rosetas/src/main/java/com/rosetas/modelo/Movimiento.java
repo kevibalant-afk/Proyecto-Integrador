@@ -3,34 +3,29 @@ package com.rosetas.modelo;
 public class Movimiento {
     private int id_Movimiento;
     private double saldoAnterior;
-    private double movimiento;
+    private double monto;
     private double saldoFinal;
     private Producto producto;
 
-    public Movimiento(int id_Movimiento, double saldoAnterior, double movimiento, Producto producto) {
-        this.id_Movimiento = id_Movimiento;
+    
+    public Movimiento(double saldoAnterior, double monto, double saldoFinal, double saldoFinal2, Producto producto) {
         this.saldoAnterior = saldoAnterior;
-        this.movimiento = movimiento;
-        this.saldoFinal = calcularSaldo();
+        this.monto = monto;
+        this.saldoFinal = saldoFinal;
         this.producto = producto;
+            
+        }
+
+    public Movimiento(int idMovimiento, double saldoAnterior2, double monto2, double saldoFinal2, Producto producto2) {
+        //TODO Auto-generated constructor stub
     }
 
-    public Movimiento(double saldoAnterior, double movimiento, Producto producto) {
-        this.saldoAnterior = saldoAnterior;
-        this.movimiento = movimiento;
-        this.saldoFinal = calcularSaldo();
-        this.producto = producto;
-    }
-        public Movimiento(double saldoAnterior, Producto producto) {
-            this.saldoAnterior = saldoAnterior;
-            this.producto = producto;
-        }
-    public Producto getProducto(String nombre) {
+    public Producto getProducto() {
         return producto;
     }
 
     public double calcularSaldo() {
-        return saldoAnterior + movimiento;
+        return saldoAnterior + monto;
     }
 
     public double getSaldoFinal() {
@@ -45,11 +40,11 @@ public class Movimiento {
     public void setSaldoAnterior(double saldoAnterior) {
         this.saldoAnterior = saldoAnterior;
     }
-    public double getMovimiento() {
-        return movimiento;
+    public double getMonto() {
+        return monto;
     }
-    public void setMovimiento(double movimiento) {
-        this.movimiento = movimiento;
+    public void setMonto(double monto) {
+        this.monto = monto;
     }
     public int getId_Movimiento() {
         return id_Movimiento;
@@ -57,4 +52,5 @@ public class Movimiento {
     public void setId_Movimiento(int id_Movimiento) {
         this.id_Movimiento = id_Movimiento;
     }
+    
 }
