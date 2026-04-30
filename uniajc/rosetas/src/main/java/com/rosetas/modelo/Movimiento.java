@@ -15,6 +15,9 @@ public class Movimiento {
         this.saldoFinal = saldoFinal;
         this.producto = producto;
     }
+    public int getId_Movimiento() {
+        return id_Movimiento;
+    }
 
     public double getSaldoAnterior() {
         return saldoAnterior;

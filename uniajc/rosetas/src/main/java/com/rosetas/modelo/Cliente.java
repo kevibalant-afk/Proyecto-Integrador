@@ -5,9 +5,9 @@ public class Cliente {
     private String nombre;
     private String apellido;
     private String telefono;
-    private int producto;
+    private Producto producto;
 
-    public Cliente(int id_Cliente, String nombre, String telefono, String apellido, int producto) {
+    public Cliente(int id_Cliente, String nombre, String telefono, String apellido, Producto producto) {
         this.id_Cliente = id_Cliente;
         this.nombre = nombre;
         this.telefono = telefono;
@@ -46,11 +46,11 @@ public class Cliente {
         this.telefono = telefono;
     }
 
-    public int getProducto() {
+    public Producto getProducto() {
         return producto;
     }
 
-    public void setProducto(int producto) {
+    public void setProducto(Producto producto) {
         this.producto = producto;
     }
 }

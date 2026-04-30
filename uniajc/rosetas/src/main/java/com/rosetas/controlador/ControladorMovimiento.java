@@ -3,17 +3,17 @@ package com.rosetas.controlador;
 
 import com.rosetas.modelo.Movimiento;
 import com.rosetas.modelo.Producto;
+import com.rosetas.Dao.DaoMovimiento;
 import com.rosetas.vista.VistaMovimientos;
 
 public class ControladorMovimiento {
-    private Movimiento movimiento;
-    private VistaMovimientos vista;
+   private DaoMovimiento movimientoDAO = new DaoMovimiento();
+   private VistaMovimientos vistaMovimientos;
 
-    public ControladorMovimiento(VistaMovimientos vista) {
-        this.vista = vista;
+    public ControladorMovimiento(VistaMovimientos vistaMovimientos) {
+        this.vistaMovimientos = vistaMovimientos;
     }
-
-    public void crearMovimiento(int idMovimiento, double saldoAnterior, double monto, Producto producto) {
+public void crearMovimiento(int idMovimiento, double saldoAnterior, double monto, Producto producto) {
 
     double saldoFinal = saldoAnterior + monto;
 
@@ -22,8 +22,12 @@ public class ControladorMovimiento {
         return;
     }
 
-    this.movimiento = new Movimiento(idMovimiento, saldoAnterior, monto, saldoFinal, producto);
+    Movimiento movimiento = new Movimiento(idMovimiento, saldoAnterior, monto, saldoFinal, producto);
 
-    vista.mostrarMovimiento(this.movimiento); 
+    movimientoDAO.guardar(movimiento); 
+
+    vistaMovimientos.mostrarMovimiento(movimiento);
 }
+
+
 }
