@@ -54,6 +54,8 @@ public class DaoProducto {
         return null;
     }
 
+    
+
     public List<Producto> listar() {
         List<Producto> lista = new ArrayList<>();
         String sql = "SELECT * FROM producto";
@@ -76,5 +78,30 @@ public class DaoProducto {
         }
 
         return lista;
+    }
+
+    public List<Producto> obtenerTodos() {
+        List<Producto> productos = new ArrayList<>();
+        String sql = "SELECT * FROM producto";
+
+        try (Connection con = ConexionDB.conectar();
+             Statement st = con.createStatement();
+             ResultSet rs = st.executeQuery(sql)) {
+
+            while (rs.next()) {
+                Producto producto = new Producto(
+                        rs.getInt("id_producto"),
+                        rs.getString("nombre"),
+                        rs.getString("tipo"),
+                        rs.getDouble("precio")
+                );
+                productos.add(producto);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error al obtener productos: " + e.getMessage());
+        }
+
+        return productos;
     }
 }

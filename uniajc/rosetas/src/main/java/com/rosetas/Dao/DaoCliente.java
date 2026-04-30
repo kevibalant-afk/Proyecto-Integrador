@@ -1,95 +1,69 @@
 package com.rosetas.Dao;
 
-
 import com.rosetas.modelo.Cliente;
 import com.rosetas.modelo.Producto;
 import com.rosetas.config.ConexionDB;
-import java.sql.PreparedStatement;
+
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.ResultSet;
-import java.sql.Statement;
+
 public class DaoCliente {
 
-    
+    private Connection conn;
+
+    public DaoCliente() {
+        conn = ConexionDB.conectar();
+    }
+
+    // ✅ GUARDAR CLIENTE
     public void guardar(Cliente cliente) {
-        
 
         String sql = "INSERT INTO cliente (nombre, apellido, telefono, id_producto) VALUES (?, ?, ?, ?)";
 
-        try (Connection con = ConexionDB.conectar();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, cliente.getNombre());
             ps.setString(2, cliente.getApellido());
             ps.setString(3, cliente.getTelefono());
-            ps.setInt(4, cliente.getProducto().getId_Producto());
+
+            if (cliente.getProducto() != null) {
+                ps.setInt(4, cliente.getProducto().getId_Producto());
+            } else {
+                ps.setNull(4, java.sql.Types.INTEGER);
+            }
 
             ps.executeUpdate();
 
-            System.out.println("Cliente guardado en BD");
-
         } catch (Exception e) {
-            System.out.println(" Error al guardar cliente: " + e.getMessage());
+            e.printStackTrace();
         }
-    }
-
-    //
-    public Cliente buscar(int id_Cliente) {
-
-        String sql = "SELECT * FROM cliente WHERE id_cliente = ?";
-
-        try (Connection con = ConexionDB.conectar();
-             PreparedStatement ps = con.prepareStatement(sql)) {
-
-            ps.setInt(1, id_Cliente);
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()) {
-
-                //Solo traemos el id del producto (puedes mejorarlo luego con JOIN)
-                Producto producto = new Producto(
-                        rs.getInt("id_producto"),
-                        "Producto desconocido",
-                        "",
-                        0
-                );
-                return new Cliente(
-                        rs.getInt("id_cliente"),
-                        rs.getString("nombre"),
-                        rs.getString("apellido"),
-                        rs.getString("telefono"),
-                        producto
-                );
-
-               
-            }
-
-        } catch (Exception e) {
-            System.out.println(" Error al buscar cliente: " + e.getMessage());
-        }
-
-        return null;
     }
 
     public List<Cliente> listar() {
 
         List<Cliente> lista = new ArrayList<>();
-        String sql = "SELECT * FROM cliente";
 
-        try (Connection con = ConexionDB.conectar();
-             Statement st = con.createStatement();
-             ResultSet rs = st.executeQuery(sql)) {
+        String sql = "SELECT c.*, p.nombre AS nombre_producto " +
+                     "FROM cliente c " +
+                     "LEFT JOIN producto p ON c.id_producto = p.id_producto";
+
+        try (PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
 
-                Producto producto = new Producto(
-                        rs.getInt("id_producto"),
-                        "Producto desconocido",
-                        "",
-                        0
-                );
+                Producto producto = null;
+
+                int idProducto = rs.getInt("id_producto");
+
+                if (idProducto != 0) {
+                    producto = new Producto(idProducto, sql, sql, idProducto);
+                    producto.setId_Producto(idProducto);
+                    producto.setNombre(rs.getString("nombre_producto"));
+                }
 
                 Cliente cliente = new Cliente(
                         rs.getInt("id_cliente"),
@@ -103,26 +77,65 @@ public class DaoCliente {
             }
 
         } catch (Exception e) {
-            System.out.println("Error al listar clientes: " + e.getMessage());
+            e.printStackTrace();
         }
 
         return lista;
     }
 
-    public void eliminar(int idCliente) {
+    public Cliente buscar(int id) {
+
+        String sql = "SELECT c.*, p.nombre AS nombre_producto " +
+                     "FROM cliente c " +
+                     "LEFT JOIN producto p ON c.id_producto = p.id_producto " +
+                     "WHERE c.id_cliente = ?";
+
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, id);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+
+                Producto producto = null;
+
+                int idProducto = rs.getInt("id_producto");
+
+                if (idProducto != 0) {
+                    producto = new Producto(idProducto, sql, sql, idProducto);
+                    producto.setId_Producto(idProducto);
+                    producto.setNombre(rs.getString("nombre_producto"));
+                }
+
+                return new Cliente(
+                        rs.getInt("id_cliente"),
+                        rs.getString("nombre"),
+                        rs.getString("apellido"),
+                        rs.getString("telefono"),
+                        producto
+                );
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    // ✅ ELIMINAR CLIENTE
+    public void eliminar(int id) {
 
         String sql = "DELETE FROM cliente WHERE id_cliente = ?";
 
-        try (Connection con = ConexionDB.conectar();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setInt(1, idCliente);
+            ps.setInt(1, id);
             ps.executeUpdate();
 
-            System.out.println(" Cliente eliminado");
-
         } catch (Exception e) {
-            System.out.println(" Error al eliminar: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }

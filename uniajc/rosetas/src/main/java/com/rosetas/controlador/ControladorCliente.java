@@ -6,33 +6,21 @@ import com.rosetas.Dao.DaoCliente;
 import com.rosetas.vista.VistaCliente;
 
 public class ControladorCliente {
-    private DaoCliente clienteDAO = new DaoCliente();
-   private Cliente cliente;
+
+    private DaoCliente clienteDAO;
     private VistaCliente vista;
 
-    public ControladorCliente() {
-    }
-    
-
     public ControladorCliente(VistaCliente vista) {
+        this.clienteDAO = new DaoCliente();
         this.vista = vista;
     }
-    public void crearCliente( int id_Cliente, String nombre, String apellido, String telefono, Producto producto) {
-        cliente = new Cliente( id_Cliente, nombre, apellido, telefono, producto);
+
+    public void registrarCliente(int id, String nombre, String apellido, String telefono, Producto producto) {
+
+        Cliente cliente = new Cliente(id, nombre, apellido, telefono, producto);
+
+        clienteDAO.guardar(cliente);
+
         vista.mostrarCliente(cliente);
     }
-    public void registrarCliente( int id_Cliente, String nombre, String apellido, String telefono, Producto producto) {
-         new Cliente( id_Cliente, nombre, apellido, telefono, producto);
-
-    }
-    public void mostrarClientes() {
-        vista.mostrarClientes();
-    }
-    public Cliente getCliente() {
-        return cliente;
-
-    }
-
-    
-
 }
